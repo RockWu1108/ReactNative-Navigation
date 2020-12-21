@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image} from 'react-native';
 import HomeScreen from './src/HomeScreen.js';
 import ProfileScreen from './src/ProfileScreen.js';
 import HomeDetailScreen from './src/HomeDetailScreen.js'
+import ProfileDetailScreen from './src/ProfileScreen'
 import {Ionicons} from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,22 +17,42 @@ export default function App() {
   //上下頁跳轉
   const Stack = createStackNavigator();
 
+  function detailStack(){
+    return(
+        <Stack.Navigator
+        initialRouteName = 'Home'
+        screenOptions ={{
+          headerStyle :{backgroundColor:'tomato'},
+          headerTintColor : 'white',
+          headerBackTitle :'返回'
+        }}
+        >
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="HomeDetailScreen" component={HomeDetailScreen} />
+      </Stack.Navigator>
+    )
+  }
+
+  function profileStack(){
+    return(
+        <Stack.Navigator
+        initialRouteName = 'Profile'
+        screenOptions ={{
+          headerStyle :{backgroundColor:'tomato'},
+          headerTintColor : 'white',
+          headerBackTitle :'返回'
+        }}
+        >
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen name="ProfileDetailScreen" component={ProfileDetailScreen} />
+      </Stack.Navigator>
+    )
+  }
+
   return (
     <NavigationContainer>
 
-      <Stack.Navigator
-      initialRouteName = 'Home'
-      screenOptions ={{
-        headerStyle :{backgroundColor:'tomato'},
-        headerTintColor : 'white',
-        headerBackTitle :'返回'
-      }}
-      >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="HomeDetailScreen" component={HomeDetailScreen} />
-     </Stack.Navigator>
-
-      {/* <Tab.Navigator
+      <Tab.Navigator
       screenOptions = { ({route}) =>({
         tabBarIcon : ({color})=>{
           let iconName ;
@@ -54,9 +75,9 @@ export default function App() {
           inactiveTintColor : 'gray'
         }}
         >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={ProfileScreen} />
-      </Tab.Navigator> */}
+        <Tab.Screen name="Home" component={detailStack} />
+        <Tab.Screen name="Settings" component={profileStack} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
